@@ -1,5 +1,5 @@
 ## prefixed_cache_store
-
+ 
 A cache wrapper for ActiveSupport that allows you to expire parts of your cache imperatively.
 
 Sometimes you need to selectively nuke parts of your cache. All cache stores for Rails support the `Store#clear()`
