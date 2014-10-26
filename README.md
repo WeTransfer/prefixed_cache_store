@@ -5,10 +5,13 @@ A cache wrapper for ActiveSupport that allows you to expire parts of your cache 
 Sometimes you need to selectively nuke parts of your cache. All cache stores for Rails support the `Store#clear()`
 method, but it usually nukes the entire backing store - be it memcached or Redis. This is mostly not what you expect.
 
-This gem provides a wrapper for any Store that will prefix the stored keys. The prefix will be memorized in a separate
-cache value. This cache value is going to be set periodically to prevent it from expiring too early.
+Originally, this wrapper has been developed to selectively expire cached items for translations when the translations
+have been updated on the backend.
 
-When you increase this prefix value, all of the keys going throigh the store are going to be modified as well - so new
+The way it works is that the wrapper accepts any `ActiveSupport::Cache::Store` and will prefix all keys going into or out of
+that `Store`. The prefix will be memorized under a separate cache key. This cache key is going to be set periodically to prevent it from expiring too early.
+
+When you increase this prefix value, all of the keys going through the store will change - so new
 versions of the values are going to be generated and saved to the store. Consider a simple example:
 
     store = PrefixedCacheStore.new(Rails.cache, "pfx") # Sets "pfx-version" to 0
