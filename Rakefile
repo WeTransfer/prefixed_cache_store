@@ -17,19 +17,18 @@ Jeweler::Tasks.new do |gem|
   gem.name = "prefixed_cache_store"
   gem.homepage = "http://github.com/julik/prefixed_cache_store"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Namespaced versioned cache wrapper for ActiveSupport}
+  gem.description = %Q{Allows you to expire parts of your cache separately}
   gem.email = "me@julik.nl"
   gem.authors = ["Julik Tarkhanov"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = ["-c", "-f progress", "-r ./spec/helper.rb"]
+  t.pattern = 'spec/**/*_spec.rb'
 end
 
 desc "Code coverage detail"
