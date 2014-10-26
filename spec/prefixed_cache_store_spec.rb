@@ -21,7 +21,8 @@ describe PrefixedCacheStore do
   describe 'delegated methods' do
     it 'get forwarded to the backing store' do
       method_names = [:silence?, :silence, :silence!,
-        :mute, :cleanup, :logger, :logger=, :instrument=, :instrument
+        :mute, :cleanup, :logger, :logger=, :instrument=, :instrument,
+        :namespace, :namespace=
       ]
       
       store_double = double('SomeStore') 

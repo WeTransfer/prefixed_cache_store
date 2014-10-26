@@ -17,7 +17,7 @@ class PrefixedCacheStore
     :silence, :silence!,
     :mute, :cleanup, 
     :logger, :logger=,
-    :instrument=, :instrument
+    :instrument=, :instrument, :namespace, :namespace=
   
   def initialize(store, prefix = 'pfx')
     @store = store
@@ -70,7 +70,7 @@ class PrefixedCacheStore
     @store.decrement(prefix_key(name), amount, options)
   end
 
-  # Clear this cache namespace.
+  # Bump the version prefix making all keys obsolete.
   def clear(options=nil)
     bump_version! # First bump the version
     @last_prefix = nil # Then make sure the cached version number will not be used
