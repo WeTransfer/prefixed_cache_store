@@ -8,7 +8,7 @@ describe PrefixedCacheStore do
       store = described_class.new(some_store)
       
       expect(store.store).to eq(some_store)
-      expect(store.prefix).to eq('namespaced')
+      expect(store.prefix).to eq('pfx')
     end
     it 'creates a store wrapping another with given the prefix' do
       some_store = double('SomeStore')

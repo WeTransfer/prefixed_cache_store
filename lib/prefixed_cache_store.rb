@@ -19,7 +19,7 @@ class PrefixedCacheStore
     :logger, :logger=,
     :instrument=, :instrument
   
-  def initialize(store, prefix = 'namespaced')
+  def initialize(store, prefix = 'pfx')
     @store = store
     @prefix = prefix
   end
