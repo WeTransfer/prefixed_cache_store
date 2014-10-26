@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 require 'rubygems'
 require 'bundler'
 begin
@@ -11,9 +10,12 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
+require_relative 'lib/prefixed_cache_store'
+
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
+  gem.version = PrefixedCacheStore::VERSION
   gem.name = "prefixed_cache_store"
   gem.homepage = "http://github.com/julik/prefixed_cache_store"
   gem.license = "MIT"
