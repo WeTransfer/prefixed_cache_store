@@ -12,6 +12,9 @@ doc
 # bundler
 .bundle
 
+# Ignore the lock
+Gemfile.lock
+
 # jeweler generated
 pkg
 
