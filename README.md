@@ -17,7 +17,7 @@ versions of the values are going to be generated and saved to the store. Conside
     store = PrefixedCacheStore.new(Rails.cache, "pfx") # Sets "pfx-version" to 0
     store.write("foo", "Hello!") # Writes "pfx-0/foo"
     store.read("foo") # Reads "pfx-0/foo"
-    store.clear # Replaces "pfx-version" with 1, does not flush your entire 60 gigabyte cache cluster
+    store.clear # Replaces "pfx-version" with 1, does not flush your cache cluster
     store.read("foo") # Reads "pfx-1/foo", which is not found now
     store.write("foo", "Different hello!") # Writes "pfx-1/foo"
 
