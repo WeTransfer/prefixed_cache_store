@@ -5,7 +5,7 @@ require 'forwardable'
 # for the namespace and the version number that can be ratched up to "unlink" all the related keys.
 # It assumes that the keys are being evicted automatically if they do not get used often.
 class PrefixedCacheStore
-  VERSION = '0.0.1'
+  VERSION = '0.1.1'
   
   RETAIN_PREFIX_FOR_SECONDS = 10
   
@@ -76,7 +76,12 @@ class PrefixedCacheStore
     @last_prefix = nil # Then make sure the cached version number will not be used
     get_and_set_current_version
   end
-
+  
+  # Returns the current version that has been set for this store
+  def current_version_number
+    get_and_set_current_version
+  end
+  
   private
   
   def bump_version!

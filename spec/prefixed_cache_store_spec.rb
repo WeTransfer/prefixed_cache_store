@@ -79,6 +79,7 @@ describe PrefixedCacheStore do
     it 'performs multi-reads' do
       some_store = ActiveSupport::Cache::MemoryStore.new
       subject = described_class.new(some_store, 'pre')
+      expect(subject.current_version_number).to eq(0)
       
       subject.write('record1', 'John')
       subject.write('record2', 'Jake')
@@ -90,6 +91,7 @@ describe PrefixedCacheStore do
       expect(some_store.read("pre-0-record1")).to eq('John')
       expect(some_store.read("pre-0-record2")).to eq('Jake')
       expect(some_store.read("pre-0-record3")).to eq('Mary')
+      
     end
   end
   
@@ -97,6 +99,8 @@ describe PrefixedCacheStore do
     it 'bumps the version' do
       some_store = ActiveSupport::Cache::MemoryStore.new
       subject = described_class.new(some_store, 'pre')
+      
+      expect(subject.current_version_number).to eq(0)
       
       subject.write('record1', 'John')
       expect(subject.read('record1')).to eq('John')
@@ -109,6 +113,8 @@ describe PrefixedCacheStore do
       subject.write('record1', 'Jake')
       expect(subject.read('record1')).to eq('Jake')
       
+      
+      expect(subject.current_version_number).to eq(1)
       expect(some_store.read("pre-version")).to eq(1)
       expect(some_store.read("pre-0-record1")).to eq('John')
       expect(some_store.read("pre-1-record1")).to eq('Jake')
