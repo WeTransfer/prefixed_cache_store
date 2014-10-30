@@ -5,7 +5,7 @@ require 'forwardable'
 # for the namespace and the version number that can be ratched up to "unlink" all the related keys.
 # It assumes that the keys are being evicted automatically if they do not get used often.
 class PrefixedCacheStore
-  VERSION = '0.1.1'
+  VERSION = '0.2.1'
   
   RETAIN_PREFIX_FOR_SECONDS = 10
   
@@ -29,6 +29,14 @@ class PrefixedCacheStore
       @store.fetch(prefix_key(name), options) { yield }
     else
       @store.fetch(prefix_key(name), options)
+    end
+  end
+  
+  def fetch_multi(*names)
+    options = names.extract_options!
+    prefixed_keys = names.map{|e| prefix_key(e) }
+    @store.fetch_multi(*prefixed_keys, options) do | prefixed_key |
+      yield(unprefix_key(prefixed_key))
     end
   end
 
