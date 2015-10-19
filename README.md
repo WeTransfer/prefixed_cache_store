@@ -1,5 +1,7 @@
 ## prefixed_cache_store
  
+[![Build Status](https://travis-ci.org/WeTransfer/prefixed_cache_store.svg?branch=master)](https://travis-ci.org/WeTransfer/prefixed_cache_store)
+ 
 A cache wrapper for ActiveSupport that allows you to expire parts of your cache imperatively.
 
 Sometimes you need to selectively nuke parts of your cache. All cache stores for Rails support the `Store#clear()`
@@ -39,6 +41,6 @@ The gem has been extensively tested in production with Rails 3.x but should work
 
 ## Copyright
 
-Copyright (c) 2014 Julik Tarkhanov for WeTransfer. See LICENSE.txt for
+Copyright (c) 2014 WeTransfer. See LICENSE.txt for
 further details.
 
