@@ -10,10 +10,10 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
-  s.authors = ["Julik Tarkhanov"]
+  s.authors = ["WeTransfer"]
   s.date = "2014-10-30"
   s.description = "Allows you to expire parts of your cache separately"
-  s.email = "me@julik.nl"
+  s.email = "info@wetransfer.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
     "spec/prefixed_cache_store_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = "http://github.com/julik/prefixed_cache_store"
+  s.homepage = "http://github.com/wetransfer/prefixed_cache_store"
   s.licenses = ["MIT"]
   s.rubygems_version = "2.2.2"
   s.summary = "Namespaced versioned cache wrapper for ActiveSupport"
