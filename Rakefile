@@ -17,7 +17,7 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
   gem.version = PrefixedCacheStore::VERSION
   gem.name = "prefixed_cache_store"
-  gem.homepage = "http://github.com/julik/prefixed_cache_store"
+  gem.homepage = "http://github.com/WeTransfer/prefixed_cache_store"
   gem.license = "MIT"
   gem.summary = %Q{Namespaced versioned cache wrapper for ActiveSupport}
   gem.description = %Q{Allows you to expire parts of your cache separately}
