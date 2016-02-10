@@ -153,7 +153,7 @@ describe PrefixedCacheStore do
         subject = described_class.new(some_store, 'pre')
         
         expect {
-          suject.fetch_multi('key1, key2')
+          subject.fetch_multi('key1, key2')
         }.to raise_error(NoMethodError, /does not support/)
       end
     end
