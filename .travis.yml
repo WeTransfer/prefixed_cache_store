@@ -1,7 +1,6 @@
 gemfile:
   - gemfiles/Gemfile.rails3
   - gemfiles/Gemfile.rails4
-  - Gemfile
 rvm:
   - 2.0.0
   - 2.1.1
