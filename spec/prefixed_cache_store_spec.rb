@@ -96,26 +96,39 @@ describe PrefixedCacheStore do
   end
   
   describe 'fetch_multi' do
-    it 'performs a multi-fetch calling the backing store' do
-      some_store = ActiveSupport::Cache::MemoryStore.new
-      
-      subject = described_class.new(some_store, 'pre')
-      expect(subject.current_version_number).to eq(0)
-      
-      results = subject.fetch_multi('record1', 'record2') do | key_to_fetch |
-        "This is #{key_to_fetch}"
+    if ActiveSupport::VERSION::MAJOR < 4
+      it 'raises a NoMethodError' do
+        some_store = ActiveSupport::Cache::MemoryStore.new
+        subject = described_class.new(some_store, 'pre')
+        
+        expect {
+          suject.fetch_multi('key1, key2')
+        }.to raise_error(NoMethodError, /does not support/)
       end
+    end
+    
+    if ActiveSupport::VERSION::MAJOR > 3
+      it 'Rails 4 - performs a multi-fetch calling the backing store' do
+        some_store = ActiveSupport::Cache::MemoryStore.new
       
-      expect(results).to eq(["This is record1", "This is record2"])
+        subject = described_class.new(some_store, 'pre')
+        expect(subject.current_version_number).to eq(0)
       
-      results_from_cache = subject.fetch_multi('record1', 'record2') do | key_to_fetch |
-        raise "Should not be called"
+        results = subject.fetch_multi('record1', 'record2') do | key_to_fetch |
+          "This is #{key_to_fetch}"
+        end
+      
+        expect(results).to eq({"pre-0-record1"=>"This is record1", "pre-0-record2"=>"This is record2"})
+      
+        results_from_cache = subject.fetch_multi('record1', 'record2') do | key_to_fetch |
+          raise "Should not be called"
+        end
+        expect(results_from_cache).to eq({"pre-0-record1"=>"This is record1", "pre-0-record2"=>"This is record2"})
+      
+        expect(some_store.read("pre-version")).to eq(0)
+        expect(some_store.read("pre-0-record1")).to eq('This is record1')
+        expect(some_store.read("pre-0-record2")).to eq('This is record2')
       end
-      expect(results_from_cache).to eq(["This is record1", "This is record2"])
-      
-      expect(some_store.read("pre-version")).to eq(0)
-      expect(some_store.read("pre-0-record1")).to eq('This is record1')
-      expect(some_store.read("pre-0-record2")).to eq('This is record2')
     end
   end
   

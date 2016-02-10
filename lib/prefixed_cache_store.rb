@@ -33,6 +33,10 @@ class PrefixedCacheStore
   end
   
   def fetch_multi(*names)
+    if !@store.respond_to?(:fetch_multi)
+      raise NoMethodError, "#{@store.inspect} does not support fetch_multi()"
+    end
+    
     options = names.extract_options!
     prefixed_keys = names.map{|e| prefix_key(e) }
     @store.fetch_multi(*prefixed_keys, options) do | prefixed_key |
