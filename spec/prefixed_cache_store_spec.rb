@@ -95,6 +95,57 @@ describe PrefixedCacheStore do
     end
   end
   
+  describe 'increment' do
+    it 'increments the counter' do
+      some_store = ActiveSupport::Cache::MemoryStore.new
+      subject = described_class.new(some_store, 'pre')
+      
+      subject.increment("ctr")
+      subject.increment("ctr", 15)
+      subject.increment("ctr", 2, Hash.new)
+    end
+    
+    it 'increments the counter even if the underlying Store does not support the options argument  (like redis-activesupport)' do
+      # redis-activesupport does not support options{} for the last argument
+      some_store = ActiveSupport::Cache::MemoryStore.new
+      class << some_store
+        def increment(counter_name, incr=1)
+        end
+      end
+      
+      subject = described_class.new(some_store, 'pre')
+      
+      subject.increment("ctr")
+      subject.increment("ctr", 15)
+      subject.increment("ctr", 2, Hash.new)
+    end
+  end
+  
+  describe 'decrement' do
+    it 'decrement the counter' do
+      some_store = ActiveSupport::Cache::MemoryStore.new
+      subject = described_class.new(some_store, 'pre')
+      
+      subject.decrement("ctr")
+      subject.decrement("ctr", 15)
+      subject.decrement("ctr", 2, Hash.new)
+    end
+    
+    it 'decrement the counter even if the underlying Store does not support the options argument (like redis-activesupport)' do
+      some_store = ActiveSupport::Cache::MemoryStore.new
+      class << some_store
+        def decrement(counter_name, incr=1)
+        end
+      end
+      
+      subject = described_class.new(some_store, 'pre')
+      
+      subject.decrement("ctr")
+      subject.decrement("ctr", 15)
+      subject.decrement("ctr", 2, Hash.new)
+    end
+  end
+  
   describe 'fetch_multi' do
     if ActiveSupport::VERSION::MAJOR < 4
       it 'raises a NoMethodError' do

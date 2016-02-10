@@ -5,7 +5,7 @@ require 'forwardable'
 # for the namespace and the version number that can be ratched up to "unlink" all the related keys.
 # It assumes that the keys are being evicted automatically if they do not get used often.
 class PrefixedCacheStore
-  VERSION = '0.2.1'
+  VERSION = '0.2.2'
   
   RETAIN_PREFIX_FOR_SECONDS = 10
   
@@ -74,12 +74,20 @@ class PrefixedCacheStore
   
   # Increment a cached value.
   def increment(name, amount = 1, options=nil)
-    @store.increment(prefix_key(name), amount, options)
+    if @store.method(:increment).parameters.length > 2
+      @store.increment(prefix_key(name), amount, options)
+    else
+      @store.increment(prefix_key(name), amount) # Toss the options
+    end
   end
 
   # Decrement a cached value.
   def decrement(name, amount = 1, options=nil)
-    @store.decrement(prefix_key(name), amount, options)
+    if @store.method(:decrement).parameters.length > 2
+      @store.decrement(prefix_key(name), amount, options)
+    else
+      @store.increment(prefix_key(name), amount) # Toss the options
+    end
   end
 
   # Bump the version prefix making all keys obsolete.
