@@ -68,7 +68,7 @@ class PrefixedCacheStore
     result = @store.read_multi(*prefixed_names)
     # Unprefix the keys received
     result.each_with_object({}) do |(prefixed_key, value), memo|
-      memo.merge(unprefix_key(prefixed_key) => value)
+      memo[unprefix_key(prefixed_key)] = value
     end
   end
   
